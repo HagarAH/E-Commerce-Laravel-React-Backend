@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name',60);
             $table->string('description',255);
-            $table->unsignedBigInteger('category_id'); // Unsigned Big Integer for foreign key
+            $table->unsignedBigInteger('category_id');
+            $table->decimal('price',6,2);
             $table->timestamps();
 
             // Foreign Key constraint
             $table->foreign('category_id')
                 ->references('id')
-                ->on('categories')  // assuming you have a categories table
+                ->on('categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

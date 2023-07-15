@@ -26,6 +26,7 @@ class ProductFactory extends Factory
             'name' => $burgerName,
             'price' => $this->faker->numberBetween(10, 20),
             'description'=>$this->faker->Text(255),
+            'category_id'=>1
             ];
     }
 }
