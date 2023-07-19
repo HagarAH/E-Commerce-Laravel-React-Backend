@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartProductMap;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,8 +12,24 @@ class CartController extends Controller
 {
     public function getItems(Request $request)
     {
-
+        $items = [];
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->getAuthIdentifier())->first();
+        if ($cart) {
+            $products = CartProductMap::where('cart_id', $cart->id)->get();
+            foreach ($products as $item) {
+                $amount = $item->quantity;
+                $cartItem = Product::where('id', $item->product_id)->first();
+                if ($cartItem) {
+                    $newItem = array_merge($cartItem->toArray(), ['amount' => $amount]);
+                    array_push($items, $newItem);
+                }
+            }
+            return response(['products' => $items]);
+        }
     }
+
+
 
     public function addItems(Request $request)
     {
