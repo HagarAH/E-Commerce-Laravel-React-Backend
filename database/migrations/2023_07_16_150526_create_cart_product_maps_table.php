@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cart_product_map', function (Blueprint $table) {
+        Schema::create('cart_product_maps', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('product_id');
