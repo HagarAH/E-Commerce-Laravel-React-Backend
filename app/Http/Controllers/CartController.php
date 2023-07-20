@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+
     public function getItems(Request $request)
     {
         $items = [];
@@ -66,8 +67,20 @@ class CartController extends Controller
         }
     }
 
-    public function deleteItems(Request $request)
+    public function deleteItem(Request $request)
     {
-
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->getAuthIdentifier())->first();
+        if ($cart) {
+            $products = CartProductMap::where('cart_id', $cart->id)->get();
+            foreach ($products as $item) {
+                if ($item->product_id == $request->id) {
+                    $item->delete();
+                    return response()->json(['message' => 'Item deleted successfully']);
+                }
+            }
+        }
+        return response()->json(['message' => 'Item not found']);
     }
+
 }
