@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\Api\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,10 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index']);
+Route::get('/categories', [\App\Http\Controllers\Api\CategoryController::class, 'index']);
 
 
-Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
