@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/addItems',[CartController::class,'addItems']);
     Route::get('/getItems',[CartController::class,'getItems']);
     Route::post('/deleteItem',[CartController::class,'deleteItem']);
+    Route::patch('/updateItem',[CartController::class,'updateItem']);
 });
 
 
@@ -31,6 +32,7 @@ Route::get('/categories', [\App\Http\Controllers\Api\CategoryController::class, 
 
 
 Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
+Route::post('/getToken', [\App\Http\Controllers\Api\Payment\ZAuth::class, 'getToken']);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

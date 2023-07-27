@@ -31,7 +31,6 @@ class CartController extends Controller
     }
 
 
-
     public function addItems(Request $request)
     {
         $user = Auth::user();
@@ -77,6 +76,23 @@ class CartController extends Controller
                 if ($item->product_id == $request->id) {
                     $item->delete();
                     return response()->json(['message' => 'Item deleted successfully']);
+                }
+            }
+        }
+        return response()->json(['message' => 'Item not found']);
+    }
+
+    public function updateItem(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->getAuthIdentifier())->first();
+        if ($cart) {
+            $products = CartProductMap::where('cart_id', $cart->id)->get();
+            foreach ($products as $item) {
+                if ($item->product_id == $request->id) {
+                    $item->quantity = $request->amount;
+                    $item->save();
+                    return response()->json(['message' => 'Item updated successfully']);
                 }
             }
         }
